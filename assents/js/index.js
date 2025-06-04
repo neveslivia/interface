@@ -61,6 +61,7 @@ function cadastrar() {
 
 // Atualizar aluno
 function editarAluno(id) {
+  
   const nome = document.getElementById('nome').value.trim();
   const email = document.getElementById('email').value.trim();
 
@@ -68,7 +69,7 @@ function editarAluno(id) {
     fetch(`http://localhost:8080/api/alunos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, email })
+      body: JSON.stringify({nome, email })
     })
     .then(response => {
       if (response.ok) {
@@ -84,6 +85,18 @@ function editarAluno(id) {
       console.error("Erro ao atualizar:", error);
     });
   }
+}
+function prepararEdicao(id, nome, email) {
+  document.getElementById('nome').value = nome;
+  document.getElementById('email').value = email;
+  modoEdicaoId = id;
+
+  Swal.fire({
+    icon: 'info',
+    title: 'Modo de edição ativado',
+    text: 'Altere os dados e clique em "Adicionar" para salvar',
+    confirmButtonText: 'OK'
+  });
 }
 
 // Alterar comportamento do botão "Adicionar"
